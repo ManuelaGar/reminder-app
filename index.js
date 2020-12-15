@@ -118,14 +118,11 @@ app.post('/book', function(req, res) {
         time: req.body.time,
       });
 
-      reminder.save((err) => {
-        if (!err) {
-          res.render('confirm', {
-            name: req.body.name,
-            number: req.body.number,
-            time: req.body.time,
-          });
-        }
+      reminder.save();
+      res.render('confirm', {
+        name: req.body.name,
+        number: req.body.number,
+        time: req.body.time,
       });
 
       new cronJob(pattern, () => {
