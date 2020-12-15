@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
@@ -9,23 +7,18 @@ const cronJob = require('cron').CronJob;
 const { https } = require('follow-redirects');
 const fs = require('fs');
 
+require('dotenv').config();
+
 var messagebird = require('messagebird')(process.env.MESSAGEBIRD_API_KEY);
 
-let port = process.env.PORT;
-if (port == null || port == "") {
-  port = 3000;
-}
+const ReminderDatabase = [];
 
 const app = express();
-
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.static("public"));
-
-const ReminderDatabase = [];
-
 
 app.get('/', function(req, res) {
   res.render('home', {
@@ -73,6 +66,7 @@ app.post('/book', function(req, res) {
       return;
     } else
     if (err) {
+      console.log(err);
       // Some other error occurred
       res.render('error', {
         error: "Se produjo un error al verificar tu número de teléfono",
@@ -144,6 +138,6 @@ app.post('/book', function(req, res) {
   });
 });
 
-app.listen(port, () => {
+app.listen(3000, () => {
   console.log("Server started on port 3000.");
 });

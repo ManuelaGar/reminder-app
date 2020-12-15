@@ -1,5 +1,5 @@
 {
-  "name": "node-messagebird-reminder-example",
+  "name": "messagebird-reminder-example",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -15,5 +15,18 @@
   },
   "scripts": {
     "start": "node index.js"
-  }
+  },
+  "description": "## Why build WhatsApp medication reminders?",
+  "version": "1.0.0",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManuelaGar/reminder-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManuelaGar/reminder-app/issues"
+  },
+  "homepage": "https://github.com/ManuelaGar/reminder-app#readme"
 }
