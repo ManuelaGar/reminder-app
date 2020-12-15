@@ -54,7 +54,6 @@ app.get('/contact', function(req, res) {
 app.get('/how', function(req, res) {
   res.render('how');
 });
-
 // Process an incoming booking
 app.post('/book', function(req, res) {
 
