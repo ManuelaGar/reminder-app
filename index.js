@@ -4,14 +4,20 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 const ejs = require("ejs");
 const cronJob = require('cron').CronJob;
-const { https } = require('follow-redirects');
+const {
+  https
+} = require('follow-redirects');
 const fs = require('fs');
+const mongoose = require("mongoose");
 
 require('dotenv').config();
 
 var messagebird = require('messagebird')(process.env.MESSAGEBIRD_API_KEY);
 
-const ReminderDatabase = [];
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -19,6 +25,21 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.static("public"));
+
+mongoose.connect(process.env.MONGODB_ATLAS, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const ReminderDatabase = [];
+
+const reminderSchema = {
+  name: String,
+  number: String,
+  time: String,
+}
+
+const Reminder = mongoose.model("Reminder", reminderSchema);
 
 app.get('/', function(req, res) {
   res.render('home', {
@@ -91,15 +112,21 @@ app.post('/book', function(req, res) {
       const minutes = timeArray[1];
       const pattern = '0 ' + minutes + ' ' + hour + ' * * *';
 
-      const reminder = {
+      const reminder = new Reminder({
         name: req.body.name,
         number: req.body.number,
-        reminderTime: req.body.time,
-      }
+        time: req.body.time,
+      });
 
-      ReminderDatabase.push(reminder);
-
-      res.render('confirm', reminder);
+      reminder.save((err) => {
+        if (!err) {
+          res.render('confirm', {
+            name: req.body.name,
+            number: req.body.number,
+            time: req.body.time,
+          });
+        }
+      });
 
       new cronJob(pattern, () => {
         const options = {
@@ -115,21 +142,24 @@ app.post('/book', function(req, res) {
         const request = https.request(options, (response) => {
           const chunks = [];
 
-          response.on("data", function (chunk) {
+          response.on("data", function(chunk) {
             chunks.push(chunk);
           });
 
-          response.on("end", function (chunk) {
+          response.on("end", function(chunk) {
             var body = Buffer.concat(chunks);
             console.log(body.toString());
           });
 
-          response.on("error", function (error) {
+          response.on("error", function(error) {
             console.error(error);
           });
         });
 
-        const postData = JSON.stringify({"name": req.body.name,"number": req.body.number});
+        const postData = JSON.stringify({
+          "name": req.body.name,
+          "number": req.body.number
+        });
         request.write(postData);
         request.end();
 
@@ -138,6 +168,6 @@ app.post('/book', function(req, res) {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000.");
+app.listen(port, () => {
+  console.log("Server started successfullly.");
 });

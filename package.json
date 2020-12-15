@@ -11,7 +11,8 @@
     "follow-redirects": "^1.13.1",
     "fs": "0.0.1-security",
     "messagebird": "^2.1.4",
-    "moment": "^2.22.1"
+    "moment": "^2.22.1",
+    "mongoose": "^5.11.8"
   },
   "scripts": {
     "start": "node index.js"
@@ -23,8 +24,11 @@
     "type": "git",
     "url": "git+https://github.com/ManuelaGar/reminder-app.git"
   },
-  "author": "",
+  "author": "Manuela Garcia",
   "license": "ISC",
+  "engines": {
+    "node": "12.16.0"
+  },
   "bugs": {
     "url": "https://github.com/ManuelaGar/reminder-app/issues"
   },
