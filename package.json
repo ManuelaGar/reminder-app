@@ -3,9 +3,13 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cron": "^1.8.2",
     "dotenv": "^5.0.1",
+    "ejs": "^3.1.5",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
+    "follow-redirects": "^1.13.1",
+    "fs": "0.0.1-security",
     "messagebird": "^2.1.4",
     "moment": "^2.22.1"
   },

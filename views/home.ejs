@@ -1,0 +1,21 @@
+<%- include("partials/header"); -%>
+<div class="form-signin">
+  <h1>Recordatorios diarios</h1>
+  <p>Si deseas recibir recordatorios para la toma de medicamentos, por favor ingresa los siguientes datos:</p>
+  <form action="/book" method="post">
+    <label class="form-label">Tu nombre: </label>
+    <br>
+    <input type="text" name="name" class="form-control" placeholder="Nombre">
+    <br>
+    <label class="form-label">Tu numero celular: </label>
+    <br>
+    <input type="text" name="number" class="form-control" placeholder="Número con el código del país, ej: 573105554433">
+    <br>
+    <label class="form-label">Hora del recordatorio diario: </label>
+    <br>
+    <input type="time" name="time" class="time" value="<%= time %>">
+    <br>
+    <button type="sumbit" name="button" class="btn btn-primary">Inscribirme!</button>
+  </form>
+</div>
+<%- include("partials/footer"); -%>
