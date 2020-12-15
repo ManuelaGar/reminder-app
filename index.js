@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
@@ -6,8 +8,6 @@ const ejs = require("ejs");
 const cronJob = require('cron').CronJob;
 const { https } = require('follow-redirects');
 const fs = require('fs');
-
-require('dotenv').config();
 
 var messagebird = require('messagebird')(process.env.MESSAGEBIRD_API_KEY);
 
