@@ -11,6 +11,11 @@ require('dotenv').config();
 
 var messagebird = require('messagebird')(process.env.MESSAGEBIRD_API_KEY);
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -106,7 +111,7 @@ app.post('/book', function(req, res) {
         const options = {
           'method': 'POST',
           'hostname': 'flows.messagebird.com',
-          'path': '/flows/95aa582f-a145-4cc7-81e0-99fc5e340262/invoke',
+          'path': process.env.MESSAGEBIRD_FLOW_PATH,
           'headers': {
             'Content-Type': 'application/json'
           },
@@ -139,6 +144,6 @@ app.post('/book', function(req, res) {
   });
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("Server started on port 3000.");
 });
