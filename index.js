@@ -31,10 +31,9 @@ mongoose.connect(process.env.MONGODB_ATLAS, {
   useUnifiedTopology: true
 });
 
-const ReminderDatabase = [];
-
 const reminderSchema = {
   name: String,
+  code: String,
   number: String,
   time: String,
 }
@@ -56,22 +55,24 @@ app.get('/how', function(req, res) {
 });
 // Process an incoming booking
 app.post('/book', function(req, res) {
+  const completeNumber = req.body.code + req.body.number;
 
   // Check if user has provided input for all form fields
-  if (!req.body.name || !req.body.number || !req.body.time ||
-    req.body.name == '' || req.body.number == '' || req.body.time == '') {
+  if (!req.body.name || !req.body.number || !req.body.time || !req.body.code ||
+    req.body.name == '' || req.body.number == '' || req.body.time == '' || req.body.code == '') {
     // If not, show an error
     res.render('error', {
       error: "Por favor llena todos los campos!",
       name: req.body.name,
       number: req.body.number,
+      code: req.body.code,
       time: req.body.time
     });
     return;
   }
 
   // Check if phone number is valid
-  messagebird.lookup.read(req.body.number, process.env.COUNTRY_CODE, function(err, response) {
+  messagebird.lookup.read(completeNumber, process.env.COUNTRY_CODE, function(err, response) {
     console.log(err);
     console.log(response);
 
@@ -81,6 +82,7 @@ app.post('/book', function(req, res) {
         error: "Debes ingresar un número telefónico válido!",
         name: req.body.name,
         number: req.body.number,
+        code: req.body.code,
         time: req.body.time
       });
       return;
@@ -92,6 +94,7 @@ app.post('/book', function(req, res) {
         error: "Se produjo un error al verificar tu número de teléfono",
         name: req.body.name,
         number: req.body.number,
+        code: req.body.code,
         time: req.body.time
       });
     } else
@@ -101,6 +104,7 @@ app.post('/book', function(req, res) {
         error: "Ingresaste un número válido, pero no es un número de celular. Por favor ingresa un número móvil para que podamos contactarte.",
         name: req.body.name,
         number: req.body.number,
+        code: req.body.code,
         time: req.body.time
       });
     } else {
@@ -113,6 +117,7 @@ app.post('/book', function(req, res) {
 
       const reminder = new Reminder({
         name: req.body.name,
+        code: req.body.code,
         number: req.body.number,
         time: req.body.time,
       });
@@ -120,6 +125,7 @@ app.post('/book', function(req, res) {
       reminder.save();
       res.render('confirm', {
         name: req.body.name,
+        code: req.body.code,
         number: req.body.number,
         time: req.body.time,
       });
@@ -154,7 +160,7 @@ app.post('/book', function(req, res) {
 
         const postData = JSON.stringify({
           "name": req.body.name,
-          "number": req.body.number
+          "number": completeNumber
         });
         request.write(postData);
         request.end();

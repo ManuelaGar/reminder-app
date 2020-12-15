@@ -54,7 +54,7 @@ Check whether the phone number is correct. This can be done with the [MessageBir
 
 ````javascript
 // Check if phone number is valid
-messagebird.lookup.read(req.body.number, process.env.COUNTRY_CODE, function (err, response) {
+messagebird.lookup.read(completeNumber, process.env.COUNTRY_CODE, function (err, response) {
     // ...
 ````
 
@@ -78,6 +78,7 @@ In the callback function, we handle four different cases:
                 error : "You need to enter a valid phone number!",
                 name : req.body.name,
                 number: req.body.number,
+                code: req.body.code,
                 time : req.body.time
             });
             return;
