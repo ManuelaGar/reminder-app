@@ -1,10 +1,10 @@
 <%- include("partials/header"); -%>
 <div class="form-signin">
   <h1>Error</h1>
-  <p><strong><%= error%></strong></p>
+  <p><strong><%= error %></strong></p>
   <form action="/book" method="post">
     <label class="form-label">Tu nombre</label>
-    <input type="text" name="name" class="form-control" placeholder="Nombre">
+    <input type="text" name="name" class="form-control" placeholder="Nombre" value="<%= name %>">
     <div class="row">
       <div class="col-sm-6">
         <label class="form-label">Código del país</label>
@@ -12,7 +12,7 @@
       </div>
       <div class="col-sm-6">
         <label class="form-label">Tu número celular</label>
-        <input name="number" type="text" class="form-control" placeholder="ej: 3105554433">
+        <input name="number" type="text" class="form-control" placeholder="ej: 3105554433" value="<%= number %>">
       </div>
     </div>
     <label class="form-label">Hora del recordatorio diario</label>
