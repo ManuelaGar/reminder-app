@@ -2,13 +2,11 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
 const moment = require('moment');
-const ejs = require("ejs");
+const ejs = require('ejs');
 const cronJob = require('cron').CronJob;
-const {
-  https
-} = require('follow-redirects');
+const { https } = require('follow-redirects');
 const fs = require('fs');
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 require('dotenv').config();
 
@@ -21,10 +19,8 @@ if (port == null || port == "") {
 
 const app = express();
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
 mongoose.connect(process.env.MONGODB_ATLAS, {
   useNewUrlParser: true,
@@ -38,7 +34,7 @@ const reminderSchema = {
   time: String,
 }
 
-const Reminder = mongoose.model("Reminder", reminderSchema);
+const Reminder = mongoose.model('Reminder', reminderSchema);
 
 app.get('/', function(req, res) {
   res.render('home', {
@@ -53,7 +49,7 @@ app.get('/contact', function(req, res) {
 app.get('/how', function(req, res) {
   res.render('how');
 });
-// Process an incoming booking
+
 app.post('/book', function(req, res) {
   const completeNumber = req.body.code + req.body.number;
 
@@ -62,7 +58,7 @@ app.post('/book', function(req, res) {
     req.body.name == '' || req.body.number == '' || req.body.time == '' || req.body.code == '') {
     // If not, show an error
     res.render('error', {
-      error: "Por favor llena todos los campos!",
+      error: 'Por favor llena todos los campos!',
       name: req.body.name,
       number: req.body.number,
       code: req.body.code,
@@ -79,7 +75,7 @@ app.post('/book', function(req, res) {
     if (err && err.errors[0].code == 21) {
       // This error code indicates that the phone number has an unknown format
       res.render('error', {
-        error: "Debes ingresar un número telefónico válido!",
+        error: 'Debes ingresar un número telefónico válido!',
         name: req.body.name,
         number: req.body.number,
         code: req.body.code,
@@ -91,17 +87,17 @@ app.post('/book', function(req, res) {
       console.log(err);
       // Some other error occurred
       res.render('error', {
-        error: "Se produjo un error al verificar tu número de teléfono",
+        error: 'Se produjo un error al verificar tu número de teléfono.',
         name: req.body.name,
         number: req.body.number,
         code: req.body.code,
         time: req.body.time
       });
     } else
-    if (response.type != "mobile") {
+    if (response.type != 'mobile') {
       // The number lookup was successful but it is not a mobile number
       res.render('error', {
-        error: "Ingresaste un número válido, pero no es un número de celular. Por favor ingresa un número móvil para que podamos contactarte.",
+        error: 'Ingresaste un número válido, pero no es un número de celular. Por favor ingresa un número móvil para que podamos contactarte.',
         name: req.body.name,
         number: req.body.number,
         code: req.body.code,
@@ -144,23 +140,23 @@ app.post('/book', function(req, res) {
         const request = https.request(options, (response) => {
           const chunks = [];
 
-          response.on("data", function(chunk) {
+          response.on('data', function(chunk) {
             chunks.push(chunk);
           });
 
-          response.on("end", function(chunk) {
+          response.on('end', function(chunk) {
             var body = Buffer.concat(chunks);
             console.log(body.toString());
           });
 
-          response.on("error", function(error) {
+          response.on('error', function(error) {
             console.error(error);
           });
         });
 
         const postData = JSON.stringify({
-          "name": req.body.name,
-          "number": completeNumber
+          'name': req.body.name,
+          'number': completeNumber
         });
         request.write(postData);
         request.end();
@@ -171,5 +167,5 @@ app.post('/book', function(req, res) {
 });
 
 app.listen(port, () => {
-  console.log("Server started successfullly.");
+  console.log('Server started successfullly.');
 });
