@@ -97,13 +97,8 @@ router.post('/book', function(req, res) {
             const reminderString = moment().format('Y-MM-DD') + ' ' + req.body.time;
             let reminderDate = new Date(reminderString);
 
-            console.log('now ' + now);
-            console.log('reminder ' + reminderDate);
-
             if (now >= reminderDate) {
-              console.log('aca entre');
               reminderDate.setDate(reminderDate.getDate() + 1);
-              console.log('reminder ' + reminderDate);
             }
 
             Reminder.findOneAndUpdate({
@@ -130,4 +125,7 @@ router.post('/book', function(req, res) {
           });
       });
 
-    module.exports = router;
+    module.exports = {
+      router: router,
+      Reminder: Reminder
+    };
