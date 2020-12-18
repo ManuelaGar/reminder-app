@@ -144,7 +144,8 @@ body {
   .form-signin .form-control {
     width: 100%;
     font-size: 2.2rem;
-    margin: 15px;
+    margin-top: 8px;
+    margin-bottom: 15px;
   }
 
   .time {
