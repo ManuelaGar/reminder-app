@@ -4,23 +4,30 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 
+/* Containers */
 .container-fluid {
   padding: 0% 10%;
 }
 
+/* Sections */
 .header {
   background-color: #F8F8F8;
 }
 
+.reminder-form {
+  padding-bottom: 2%;
+}
+
+/* Navigation Bar */
 .navbar-light .navbar-brand {
   color: #5E5E5E;
 }
 
 .navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
-    color: #454545;
+  color: #454545;
 }
 
 .navbar {
@@ -42,10 +49,11 @@ body {
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
-    text-decoration: none;
-    background-color: #F8F8F8;
+  text-decoration: none;
+  background-color: #F8F8F8;
 }
 
+/* Form */
 .form-signin {
   width: 100%;
   max-width: 700px;
@@ -90,6 +98,7 @@ body {
   background: #fff;
 }
 
+/* Footer */
 .footer {
   position: absolute;
   text-align: center;
@@ -100,7 +109,29 @@ body {
 }
 
 .footer-txt {
-  margin-top: 25px;
+  margin-top: 15px;
   font-size: 16px;
   color: #fff;
+}
+
+@media (max-width: 1028px) {
+  .container-fluid {
+    align-items: center;
+  }
+
+  h2.navbar-brand {
+    font-size: 2.7rem;
+  }
+
+  .navbar {
+    padding: 10% 0px;
+    font-size: 2rem;
+    letter-spacing: 5px;
+  }
+
+  .form-signin {
+    width: 100%;
+    padding: 15px;
+    margin: auto;
+  }
 }
