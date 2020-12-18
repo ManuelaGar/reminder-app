@@ -46,25 +46,6 @@ body {
     background-color: #F8F8F8;
 }
 
-.footer-padding {
-  padding-bottom: 60px;
-}
-
-.footer {
-  position: absolute;
-  text-align: center;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  background-color: #1abc9c;
-}
-
-.footer p {
-  margin-top: 25px;
-  font-size: 12px;
-  color: #fff;
-}
-
 .form-signin {
   width: 100%;
   max-width: 700px;
@@ -107,4 +88,19 @@ body {
 .timepicker .form-control,
 .datetimepicker .form-control {
   background: #fff;
+}
+
+.footer {
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #1abc9c;
+}
+
+.footer-txt {
+  margin-top: 25px;
+  font-size: 16px;
+  color: #fff;
 }
