@@ -119,6 +119,10 @@ body {
     align-items: center;
   }
 
+  h2 {
+    font-size: 2.5rem;
+  }
+
   h2.navbar-brand {
     font-size: 2.7rem;
   }
@@ -130,8 +134,33 @@ body {
   }
 
   .form-signin {
+    align-items: center;
     width: 100%;
     padding: 15px;
-    margin: auto;
+    margin: 50px auto;
+    font-size: 2.2rem;
+  }
+
+  .form-signin .form-control {
+    width: 100%;
+    font-size: 2.2rem;
+    margin: 15px;
+  }
+
+  .time {
+    width: 100%;
+    padding: 10px;
+    font-size: 2.2rem;
+  }
+
+  .btn {
+    margin-top: 30px;
+    font-size: 2.2rem;
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .footer-txt {
+    font-size: 1.7rem;
   }
 }
