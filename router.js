@@ -43,6 +43,12 @@ router.get('/delete', function(req, res) {
   res.render('delete');
 });
 
+router.get('/update', function(req, res) {
+  res.render('update', {
+    time: moment().format('HH:mm')
+  });
+});
+
 router.post('/book', function(req, res) {
   // Check if user has provided input for all form fields
   if (!req.body.name || !req.body.number || !req.body.time || !req.body.code ||
@@ -129,10 +135,7 @@ router.post('/book', function(req, res) {
   });
 });
 
-
-
 router.post('/delete', (req, res) => {
-  completeNumber = req.body.code + req.body.number;
   Reminder.findOneAndDelete({
     number: req.body.number,
     code: req.body.code
@@ -141,6 +144,32 @@ router.post('/delete', (req, res) => {
       console.log(err);
     } else {
       res.render('confirm_delete', foundUser);
+    }
+  });
+});
+
+router.post('/update', (req, res) => {
+  const now = new Date();
+  const reminderString = moment().format('Y-MM-DD') + ' ' + req.body.time;
+  let reminderDate = new Date(reminderString);
+
+  if (now >= reminderDate) {
+    reminderDate.setDate(reminderDate.getDate() + 1);
+  }
+
+  Reminder.findOneAndUpdate({
+    number: req.body.number,
+    code: req.body.code
+  }, {
+    time: req.body.time,
+    nextExecution: reminderDate,
+  }, {
+    new: true
+  }, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render('confirm', foundUser);
     }
   });
 })
