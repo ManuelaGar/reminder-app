@@ -1,0 +1,19 @@
+<%- include("partials/header"); -%>
+    <div class="form-signin">
+      <h2>Darme de baja</h2>
+      <p>Ingresa tu numero de telefono para dejar de recibir recordatorios.</p>
+      <form action="/delete" method="post">
+        <div class="row">
+          <div class="col-sm-12">
+            <label class="form-label">Código del país</label>
+            <%- include("partials/country_codes"); -%>
+          </div>
+          <div class="col-sm-12">
+            <label class="form-label">Tu número celular</label>
+            <input name="number" type="text" class="form-control" placeholder="ej: 3105554433">
+          </div>
+        </div>
+        <button type="sumbit" name="button" class="btn btn-outline-secondary">Darme de Baja</button>
+      </form>
+    </div>
+<%- include("partials/footer"); -%>

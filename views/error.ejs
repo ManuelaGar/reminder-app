@@ -1,23 +1,23 @@
 <%- include("partials/header"); -%>
-<div class="form-signin">
-  <h2>Error</h2>
-  <p><strong><%= error %></strong></p>
-  <form action="/book" method="post">
-    <label class="form-label">Tu nombre</label>
-    <input type="text" name="name" class="form-control" placeholder="Nombre" value="<%= name %>">
-    <div class="row">
-      <div class="col-sm-12">
-        <label class="form-label">Código del país</label>
-        <%- include("partials/country_codes"); -%>
-      </div>
-      <div class="col-sm-12">
-        <label class="form-label">Tu número celular</label>
-        <input name="number" type="text" class="form-control" placeholder="ej: 3105554433" value="<%= number %>">
-      </div>
+    <div class="form-signin">
+      <h2>Error</h2>
+      <p><strong><%= error %></strong></p>
+      <form action="/book" method="post">
+        <label class="form-label">Tu nombre</label>
+        <input type="text" name="name" class="form-control" placeholder="Nombre" value="<%= name %>">
+        <div class="row">
+          <div class="col-sm-12">
+            <label class="form-label">Código del país</label>
+            <%- include("partials/country_codes"); -%>
+          </div>
+          <div class="col-sm-12">
+            <label class="form-label">Tu número celular</label>
+            <input name="number" type="text" class="form-control" placeholder="ej: 3105554433" value="<%= number %>">
+          </div>
+        </div>
+        <label class="form-label">Hora del recordatorio diario</label>
+        <input type="time" name="time" class="time" value="<%= time %>">
+        <button type="sumbit" name="button" class="btn btn-outline-secondary">Inscribirme!</button>
+      </form>
     </div>
-    <label class="form-label">Hora del recordatorio diario</label>
-    <input type="time" name="time" class="time" value="<%= time %>">
-    <button type="sumbit" name="button" class="btn btn-primary">Inscribirme!</button>
-  </form>
-</div>
 <%- include("partials/footer"); -%>

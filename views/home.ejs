@@ -1,23 +1,23 @@
 <%- include("partials/header"); -%>
-<div class="form-signin">
-  <h2>Recordatorios diarios</h2>
-  <p>Si deseas recibir recordatorios para la toma de medicamentos, por favor ingresa los siguientes datos:</p>
-  <form action="/book" method="post">
-    <label class="form-label">Tu nombre</label>
-    <input type="text" name="name" class="form-control" placeholder="Nombre">
-    <div class="row">
-      <div class="col-sm-12">
-        <label class="form-label">Código del país</label>
-        <%- include("partials/country_codes"); -%>
-      </div>
-      <div class="col-sm-12">
-        <label class="form-label">Tu número celular</label>
-        <input name="number" type="text" class="form-control" placeholder="ej: 3105554433">
-      </div>
+    <div class="form-signin">
+      <h2>Recordatorios diarios</h2>
+      <p>Si deseas recibir recordatorios para la toma de medicamentos, por favor ingresa los siguientes datos:</p>
+      <form action="/book" method="post">
+        <label class="form-label">Tu nombre</label>
+        <input type="text" name="name" class="form-control" placeholder="Nombre">
+        <div class="row">
+          <div class="col-sm-12">
+            <label class="form-label">Código del país</label>
+            <%- include("partials/country_codes"); -%>
+          </div>
+          <div class="col-sm-12">
+            <label class="form-label">Tu número celular</label>
+            <input name="number" type="text" class="form-control" placeholder="ej: 3105554433">
+          </div>
+        </div>
+        <label class="form-label">Hora del recordatorio diario</label>
+        <input type="time" name="time" class="time" value="<%= time %>">
+        <button type="sumbit" name="button" class="btn btn-outline-secondary">Inscribirme!</button>
+      </form>
     </div>
-    <label class="form-label">Hora del recordatorio diario</label>
-    <input type="time" name="time" class="time" value="<%= time %>">
-    <button type="sumbit" name="button" class="btn btn-primary">Inscribirme!</button>
-  </form>
-</div>
 <%- include("partials/footer"); -%>
