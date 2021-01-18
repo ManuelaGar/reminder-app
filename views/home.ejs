@@ -1,23 +1,23 @@
 <%- include("partials/header"); -%>
-    <div class="form-signin">
-      <h2>Recordatorios diarios</h2>
-      <p>Si deseas recibir recordatorios para la toma de medicamentos, por favor ingresa los siguientes datos:</p>
-      <form action="/book" method="post">
-        <label class="form-label">Tu nombre</label>
-        <input type="text" name="name" class="form-control" placeholder="Nombre">
-        <div class="row">
-          <div class="col-sm-12">
-            <label class="form-label">Código del país</label>
-            <%- include("partials/country_codes"); -%>
-          </div>
-          <div class="col-sm-12">
-            <label class="form-label">Tu número celular</label>
-            <input name="number" type="text" class="form-control" placeholder="ej: 3105554433">
-          </div>
-        </div>
-        <label class="form-label">Hora del recordatorio diario</label>
-        <input type="time" name="time" class="time" value="<%= time %>">
-        <button type="sumbit" name="button" class="btn btn-outline-secondary">Inscribirme!</button>
-      </form>
+<div class="form-signin">
+  <h2>Recordatorios diarios</h2>
+  <p>Si deseas recibir recordatorios para la toma de medicamentos, por favor ingresa los siguientes datos:</p>
+  <form action="/book" method="post">
+    <label for="validationDefault01" class="form-label">Tu nombre</label>
+    <input type="text" name="name" id="validationDefault01" class="form-control" placeholder="Nombre" required>
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="validationDefault02" class="form-label">Código del país</label>
+        <%- include("partials/country_codes"); -%>
+      </div>
+      <div class="col-sm-12">
+        <label for="validationDefault03" class="form-label">Tu número celular</label>
+        <input name="number" type="text" class="form-control" placeholder="ej: 3105554433" id="validationDefault03" required>
+      </div>
     </div>
+    <label for="validationDefault04" class="form-label">Hora del recordatorio diario</label>
+    <input type="time" name="time" class="time" id="validationDefault04" value="<%= time %>" required>
+    <button type="sumbit" name="button" class="btn btn-outline-secondary">Inscribirme!</button>
+  </form>
+</div>
 <%- include("partials/footer"); -%>

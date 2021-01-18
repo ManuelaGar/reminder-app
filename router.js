@@ -114,23 +114,60 @@ router.post('/book', function(req, res) {
       Reminder.findOneAndUpdate({
         number: req.body.number,
         code: req.body.code
-      }, {
-        name: req.body.name,
-        code: req.body.code,
-        number: req.body.number,
-        time: req.body.time,
-        creationDate: now,
-        nextExecution: reminderDate,
-      }, {
+      }, {}, {
         new: true,
-        upsert: true
       }, (err, foundUser) => {
         if (err) {
           console.log(err);
         } else {
-          res.render('confirm', foundUser);
+          if (foundUser) {
+            res.render('existing_usr');
+          } else {
+            // crear nuevo usuario
+            const newUser = new Reminder({
+              name: req.body.name,
+              code: req.body.code,
+              number: req.body.number,
+              time: req.body.time,
+              creationDate: now,
+              nextExecution: reminderDate,
+            });
+            newUser.save((e) => {
+              if (e) {
+                console.log(e);
+              } else {
+                res.render('confirm', {
+                  name: req.body.name,
+                  code: req.body.code,
+                  number: req.body.number,
+                  time: req.body.time,
+                });
+              }
+            });
+          }
         }
       });
+
+      // Reminder.findOneAndUpdate({
+      //   number: req.body.number,
+      //   code: req.body.code
+      // }, {
+      //   name: req.body.name,
+      //   code: req.body.code,
+      //   number: req.body.number,
+      //   time: req.body.time,
+      //   creationDate: now,
+      //   nextExecution: reminderDate,
+      // }, {
+      //   new: true,
+      //   upsert: true
+      // }, (err, foundUser) => {
+      //   if (err) {
+      //     console.log(err);
+      //   } else {
+      //     res.render('confirm', foundUser);
+      //   }
+      // });
     }
   });
 });
@@ -169,7 +206,11 @@ router.post('/update', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('confirm', foundUser);
+      if (foundUser) {
+        res.render('confirm', foundUser);
+      } else {
+        res.render('not_found');
+      }
     }
   });
 })
