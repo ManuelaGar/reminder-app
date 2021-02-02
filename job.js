@@ -11,7 +11,7 @@ exports.reminderJob = function() {
         const completeNumber = user.code + user.number;
         const nextExecution = user.nextExecution.setDate(user.nextExecution.getDate() + 1);
 
-        const data = JSON.stringify({"name": user.name,"number": completeNumber, "pillCount": user.pillCount});
+        const data = JSON.stringify({"name": user.name,"fullNumber": completeNumber, "pillCount": user.pillCount, "code": user.code, "number": user.number });
         var config = {
           method: 'post',
           url: process.env.MESSAGEBIRD_FLOW,

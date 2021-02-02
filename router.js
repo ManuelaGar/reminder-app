@@ -226,6 +226,7 @@ router.post('/update', (req, res) => {
 
 router.post('/pill_count', (req, res) => {
   const pillCount = parseInt(req.body.pillCount) + 1;
+
   Reminder.findOneAndUpdate({
     number: req.body.number,
     code: req.body.code
