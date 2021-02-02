@@ -238,8 +238,7 @@ router.post('/pill_count', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('New count');
-      // res.render('confirm_delete', foundUser);
+      res.json({ pillCount: pillCount });
     }
   });
 });
