@@ -1,0 +1,26 @@
+<%- include("partials/header"); -%>
+    <div class="form-signin">
+      <h2>Información personal</h2>
+      <p>Aqui puedes editar tus datos, cambiar la hora de tus recordatorios, suspender los recordatorios por un tiempo o darte de baja.</p>
+      <form action="/update" method="post">
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <label for="validationDefault01" class="form-label">Tu nombre</label>
+            <input type="text" name="name" id="validationDefault01" class="form-control" placeholder="Nombre" value="<%= name %>" required>
+          </div>
+          <div class="col-md-6 col-sm-12">
+            <label for="validationDefault03" class="form-label">Tu número celular</label>
+            <input name="number" type="text" class="form-control" id="validationDefault03" value="+<%= code %> <%= number %>" readonly>
+          </div>
+        </div>
+        <label for="validationDefault04" class="form-label">Hora del recordatorio diario</label>
+        <input type="time" name="time" class="time" id="validationDefault04" value="<%= time %>" required>
+        <hr>
+        <label for="validationDefault05" class="form-label">Suspender recordatorio hasta</label>
+        <input type="date" name="pill_stop" class="form-control" id="validationDefault05">
+        <br>
+        <button type="sumbit" name="button" class="btn btn-primary">Actualizar</button>
+        <button type="sumbit" name="button2" class="btn btn-outline-danger" formaction="/delete">Darme de baja</button>
+      </form>
+    </div>
+<%- include("partials/footer"); -%>

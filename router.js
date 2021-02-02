@@ -20,7 +20,8 @@ const reminderSchema = {
   number: String,
   time: String,
   creationDate: Date,
-  nextExecution: Date
+  nextExecution: Date,
+  pillCount: Number
 }
 
 const Reminder = mongoose.model('Reminder', reminderSchema);
@@ -39,14 +40,8 @@ router.get('/how', function(req, res) {
   res.render('how');
 });
 
-router.get('/delete', function(req, res) {
-  res.render('delete');
-});
-
-router.get('/update', function(req, res) {
-  res.render('update', {
-    time: moment().format('HH:mm')
-  });
+router.get('/login', function(req, res) {
+  res.render('login');
 });
 
 router.post('/book', function(req, res) {
@@ -131,6 +126,7 @@ router.post('/book', function(req, res) {
               time: req.body.time,
               creationDate: now,
               nextExecution: reminderDate,
+              pillCount: 0
             });
             newUser.save((e) => {
               if (e) {
@@ -147,27 +143,28 @@ router.post('/book', function(req, res) {
           }
         }
       });
+    }
+  });
+});
 
-      // Reminder.findOneAndUpdate({
-      //   number: req.body.number,
-      //   code: req.body.code
-      // }, {
-      //   name: req.body.name,
-      //   code: req.body.code,
-      //   number: req.body.number,
-      //   time: req.body.time,
-      //   creationDate: now,
-      //   nextExecution: reminderDate,
-      // }, {
-      //   new: true,
-      //   upsert: true
-      // }, (err, foundUser) => {
-      //   if (err) {
-      //     console.log(err);
-      //   } else {
-      //     res.render('confirm', foundUser);
-      //   }
-      // });
+router.post('/login', (req, res) => {
+  Reminder.findOne({
+    number: req.body.number,
+    code: req.body.code
+  }, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      if (foundUser) {
+        res.render('edit', {
+          name: foundUser.name,
+          code: foundUser.code,
+          number: foundUser.number,
+          time: foundUser.time,
+        });
+      } else {
+        res.render('not_found');
+      }
     }
   });
 });
@@ -186,18 +183,30 @@ router.post('/delete', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
+  const fullNumber = req.body.number;
+  const numArray = fullNumber.split(" ");
+  const code = numArray[0].substring(1);
+  const number = numArray[1];
+
   const now = new Date();
   const reminderString = moment().format('Y-MM-DD') + ' ' + req.body.time;
   let reminderDate = new Date(reminderString);
+
+  const pillStop = req.body.pill_stop;
+
+  if (pillStop) {
+    reminderDate = new Date(pillStop + ' ' + req.body.time);
+  }
 
   if (now >= reminderDate) {
     reminderDate.setDate(reminderDate.getDate() + 1);
   }
 
   Reminder.findOneAndUpdate({
-    number: req.body.number,
-    code: req.body.code
+    number: number,
+    code: code
   }, {
+    name: req.body.name,
     time: req.body.time,
     nextExecution: reminderDate,
   }, {
@@ -207,13 +216,32 @@ router.post('/update', (req, res) => {
       console.log(err);
     } else {
       if (foundUser) {
-        res.render('confirm', foundUser);
+        res.render('confirm_update', foundUser);
       } else {
         res.render('not_found');
       }
     }
   });
-})
+});
+
+router.post('/pill_count', (req, res) => {
+  const pillCount = parseInt(req.body.pillCount) + 1;
+  Reminder.findOneAndUpdate({
+    number: req.body.number,
+    code: req.body.code
+  },{
+    pillCount: pillCount,
+  }, {
+    new: true
+  }, (err, foundUser) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('New count');
+      // res.render('confirm_delete', foundUser);
+    }
+  });
+});
 
 module.exports = {
   router: router,

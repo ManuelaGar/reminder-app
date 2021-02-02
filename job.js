@@ -7,15 +7,14 @@ exports.reminderJob = function() {
   new cronJob('*/5 * * * *', () => {
     const now = new Date();
     router.Reminder.find({nextExecution: { $lt: now }}, (err, foundUsers) => {
-      console.log(foundUsers);
       foundUsers.forEach((user) => {
         const completeNumber = user.code + user.number;
         const nextExecution = user.nextExecution.setDate(user.nextExecution.getDate() + 1);
 
-        const data = JSON.stringify({"name": user.name,"number": completeNumber});
+        const data = JSON.stringify({"name": user.name,"number": completeNumber, "pillCount": user.pillCount});
         var config = {
           method: 'post',
-          url: 'https://flows.messagebird.com/flows/95aa582f-a145-4cc7-81e0-99fc5e340262/invoke',
+          url: process.env.MESSAGEBIRD_FLOW,
           headers: {
             'Content-Type': 'application/json'
           },
