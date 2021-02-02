@@ -1,6 +1,4 @@
 const cronJob = require('cron').CronJob;
-const { https } = require('follow-redirects');
-const fs = require('fs');
 const mongoose = require('mongoose');
 const axios = require('axios');
 const router = require('./router.js');
