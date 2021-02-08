@@ -170,9 +170,14 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/delete', (req, res) => {
+  const fullNumber = req.body.number;
+  const numArray = fullNumber.split(" ");
+  const code = numArray[0].substring(1);
+  const number = numArray[1];
+
   Reminder.findOneAndDelete({
-    number: req.body.number,
-    code: req.body.code
+    number: number,
+    code: code
   }, (err, foundUser) => {
     if (err) {
       console.log(err);
