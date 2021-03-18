@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 require('dotenv').config();
 
 const bodyParser = require('body-parser');
@@ -6,7 +8,7 @@ const router = require('./router.js');
 const job = require('./job.js');
 
 let port = process.env.PORT;
-if (port == null || port == "") {
+if (port == null || port == '') {
   port = 3000;
 }
 
